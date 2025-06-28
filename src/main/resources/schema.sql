@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS authors;
+
+CREATE TABLE authors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  surname VARCHAR(250) NOT NULL,
+  first_name VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE articles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(250) NOT NULL,
+  content VARCHAR(250) NOT NULL,
+  author_id INT,
+  FOREIGN KEY (author_id) REFERENCES authors(id)
+);
