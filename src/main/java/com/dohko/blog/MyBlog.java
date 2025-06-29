@@ -1,6 +1,5 @@
 package com.dohko.blog;
 
-import com.dohko.blog.model.Article;
 import com.dohko.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,8 +18,6 @@ public class MyBlog implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //as.saveArticle(new Article("Article1", "Bonjour"));
-        //as.saveArticle(new Article("Article2", "Au revoir"));
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +27,7 @@ public class AuthorController {
     }
 
     @GetMapping
-    public Iterable<Author> getAuthor() {
+    public List<Author> getAuthor() {
         return AuthorService.getAllAuthors();
     }
 

@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDTO {
-    private Long id;
+public class ArticleNoAuthorDTO {
     private String title;
     private String content;
-    private Long author_id;
 }
