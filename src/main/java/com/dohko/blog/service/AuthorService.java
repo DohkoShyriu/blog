@@ -6,6 +6,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Data
@@ -14,8 +15,8 @@ public class AuthorService {
 
     @Autowired
     private AuthorRepository AuthorRepository;
-    public Optional<Author> getAuthor(final long id) {
-        return AuthorRepository.findById(id);
+    public Author getAuthor(final long id) {
+        return AuthorRepository.findById(id).get();
     }
 
     public Iterable<Author> getAllAuthors() {

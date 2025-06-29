@@ -1,12 +1,17 @@
 package com.dohko.blog.service;
 
+import com.dohko.blog.dto.ArticleDTO;
+import com.dohko.blog.mapper.ArticleMapper;
 import com.dohko.blog.model.Article;
 import com.dohko.blog.repository.ArticleRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Data
 @Service
@@ -14,8 +19,11 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
-    public Optional<Article> getArticle(final long id) {
-        return articleRepository.findById(id);
+    @Autowired
+    private ArticleRepository authorRepository;
+
+    public Article getArticle(final long id) {
+        return articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Article not found"));
     }
 
     public Iterable<Article> getAllArticles() {
@@ -43,4 +51,5 @@ public class ArticleService {
     public void deleteArticle(final long id) {
         articleRepository.deleteById(id);
     }
+
 }

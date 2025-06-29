@@ -21,7 +21,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Author> getAuthor(@PathVariable("id") final long id) {
+    public Author getAuthor(@PathVariable("id") final long id) {
         return AuthorService.getAuthor(id);
     }
 
