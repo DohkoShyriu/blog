@@ -17,29 +17,30 @@ public class AuthorController {
     private AuthorService AuthorService;
 
     @PostMapping
-    public Author createAuthor(@RequestBody Author author) {
-        return AuthorService.saveAuthor(author);
+    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+        return ResponseEntity.ok(AuthorService.saveAuthor(author));
     }
 
     @GetMapping("/{id}")
-    public Author getAuthor(@PathVariable("id") final long id) {
-        return AuthorService.getAuthor(id);
+    public ResponseEntity<Author> getAuthor(@PathVariable("id") final long id) {
+        return ResponseEntity.ok(AuthorService.getAuthor(id));
     }
 
     @GetMapping
-    public List<Author> getAuthor() {
-        return AuthorService.getAllAuthors();
+    public ResponseEntity<List<Author>> getAuthor() {
+        return ResponseEntity.ok(AuthorService.getAllAuthors());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArticle(@PathVariable("id") final long id) {
+    public ResponseEntity<Void> deleteAuthor(@PathVariable("id") final long id) {
         AuthorService.deleteAuthor(id);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateArticle(@PathVariable("id") final long id, @RequestBody Author updatedAuthor) {
+    public ResponseEntity<Author> updateAuthor(@PathVariable("id") final long id, @RequestBody Author updatedAuthor) {
         Optional<Author> author = AuthorService.updateAuthor(id, updatedAuthor);
         return (author.map(a -> new ResponseEntity<>(a, HttpStatus.OK))
-                .orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND)));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
 }

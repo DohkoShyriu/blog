@@ -1,7 +1,7 @@
 package com.dohko.blog.controller;
 
-import com.dohko.blog.dto.ArticleDTO;
 import com.dohko.blog.dto.ArticleNoAuthorDTO;
+import com.dohko.blog.dto.ArticleResponseDTO;
 import com.dohko.blog.mapper.ArticleMapper;
 import com.dohko.blog.service.ArticleService;
 import com.dohko.blog.service.AuthorService;
@@ -22,15 +22,15 @@ public class ArticleController {
     private AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleDTO article) {
-        Optional<ArticleDTO> articleDTO = articleService.saveArticle(article);
+    public ResponseEntity<ArticleResponseDTO> createArticle(@RequestBody ArticleResponseDTO article) {
+        Optional<ArticleResponseDTO> articleDTO = articleService.saveArticle(article);
         return (articleDTO.map(a -> new ResponseEntity<>(a, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleDTO> getArticleById(@PathVariable("id") final long id) {
-        ArticleDTO articleResponse = ArticleMapper.mapToDto(articleService.getArticle(id));
+    public ResponseEntity<ArticleResponseDTO> getArticleById(@PathVariable("id") final long id) {
+        ArticleResponseDTO articleResponse = ArticleMapper.mapToDto(articleService.getArticle(id));
         if (articleResponse != null) {
             return ResponseEntity.ok(articleResponse);
         }
@@ -38,8 +38,8 @@ public class ArticleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ArticleDTO>> getArticles() {
-        List<ArticleDTO> articleResponse = ArticleMapper.mapToDtos(articleService.getAllArticles());
+    public ResponseEntity<List<ArticleResponseDTO>> getArticles() {
+        List<ArticleResponseDTO> articleResponse = ArticleMapper.mapToDtos(articleService.getAllArticles());
         if (articleResponse != null) {
             return ResponseEntity.ok(articleResponse);
         }
@@ -47,13 +47,15 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArticle(@PathVariable("id") final long id) {
+    public ResponseEntity<Void> deleteArticle(@PathVariable("id") final long id) {
         articleService.deleteArticle(id);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArticleDTO> updateArticle(@PathVariable("id") final long id, @RequestBody ArticleNoAuthorDTO updatedArticle) {
-        Optional<ArticleDTO> article = articleService.updateArticle(id, updatedArticle);
+    // Do not want to allow modification of the author
+    public ResponseEntity<ArticleResponseDTO> updateArticle(@PathVariable("id") final long id, @RequestBody ArticleNoAuthorDTO updatedArticle) {
+        Optional<ArticleResponseDTO> article = articleService.updateArticle(id, updatedArticle);
         return (article.map(a -> new ResponseEntity<>(a, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }

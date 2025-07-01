@@ -1,7 +1,7 @@
 package com.dohko.blog.service;
 
-import com.dohko.blog.dto.ArticleDTO;
 import com.dohko.blog.dto.ArticleNoAuthorDTO;
+import com.dohko.blog.dto.ArticleResponseDTO;
 import com.dohko.blog.mapper.ArticleMapper;
 import com.dohko.blog.model.Article;
 import com.dohko.blog.repository.ArticleRepository;
@@ -34,12 +34,12 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public Optional<ArticleDTO> saveArticle(ArticleDTO articleDTO) {
-        Article article = ArticleMapper.mapToEntity(articleDTO, authorService.getAuthor(articleDTO.getAuthor_id()));
+    public Optional<ArticleResponseDTO> saveArticle(ArticleResponseDTO articleResponseDTO) {
+        Article article = ArticleMapper.mapToEntity(articleResponseDTO, authorService.getAuthor(articleResponseDTO.getAuthor_id()));
         return Optional.of(ArticleMapper.mapToDto(saveArticle(article)));
     }
 
-    public Optional<ArticleDTO> updateArticle(final long id, ArticleNoAuthorDTO article) {
+    public Optional<ArticleResponseDTO> updateArticle(final long id, ArticleNoAuthorDTO article) {
         Optional<Article> articleOptional = articleRepository.findById(id);
 
         if (articleOptional.isPresent()) {

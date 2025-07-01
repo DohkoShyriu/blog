@@ -1,7 +1,7 @@
 package com.dohko.blog.mapper;
 
-import com.dohko.blog.dto.ArticleDTO;
 import com.dohko.blog.dto.ArticleNoAuthorDTO;
+import com.dohko.blog.dto.ArticleResponseDTO;
 import com.dohko.blog.model.Article;
 import com.dohko.blog.model.Author;
 
@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 public class ArticleMapper {
 
-    public static ArticleDTO mapToDto(Article article) {
+    public static ArticleResponseDTO mapToDto(Article article) {
         if (article == null) {
             return null;
         }
-        ArticleDTO articleDto = ArticleDTO.builder()
+        ArticleResponseDTO articleResponseDto = ArticleResponseDTO.builder()
                 .id(article.getId())
                 .title(article.getTitle())
                 .content(article.getContent())
                 .author_id(article.getAuthor().getId())
                 .build();
-        return articleDto;
+        return articleResponseDto;
     }
 
-    public static ArticleNoAuthorDTO mapNoAuthorToDto(Article article) {
+    public static ArticleNoAuthorDTO mapToNoAuthorDto(Article article) {
         if (article == null) {
             return null;
         }
@@ -35,14 +35,14 @@ public class ArticleMapper {
     }
 
 
-    public static Article mapToEntity(ArticleDTO articleDto, Author author) {
-        if (articleDto == null || author == null) {
+    public static Article mapToEntity(ArticleResponseDTO articleResponseDto, Author author) {
+        if (articleResponseDto == null || author == null) {
             return null;
         }
         Article article = Article.builder()
-                .id(articleDto.getId())
-                .title(articleDto.getTitle())
-                .content(articleDto.getContent())
+                .id(articleResponseDto.getId())
+                .title(articleResponseDto.getTitle())
+                .content(articleResponseDto.getContent())
                 .author(author)
                 .build();
 
@@ -61,7 +61,7 @@ public class ArticleMapper {
         return article;
     }
 
-    public static List<ArticleDTO> mapToDtos(List<Article> articles) {
+    public static List<ArticleResponseDTO> mapToDtos(List<Article> articles) {
         if (articles == null) {
             return null;
         }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ArticleDTO {
+public class ArticleResponseDTO {
     private Long id;
     private String title;
     private String content;
